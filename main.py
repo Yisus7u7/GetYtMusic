@@ -1,21 +1,9 @@
-from webbrowser import get
+#!/bin/python3
+
 from lib import PySimpleGUI as sg
 import pyperclip as clipboard
+from lib import theme, icon
 from os import system, path, popen, environ, chdir
-
-
-def get_backend():
-    if path.isfile("./lib/youtube-dl"):
-        environ["YOUTUBE_DL"]="./lib/youtube-dl"
-
-    elif path.isfile("/opt/com.ys.apps/getytmusic/lib/youtube-dl"):
-        environ["YOUTUBE_DL"]="/opt/com.ys.apps/getytmusic/lib/youtube-dl"
-
-    elif path.isfile("/data/data/com.termux/files/usr/opt/com.ys.apps/getytmusic/lib/youtube-dl"):
-        environ["YOUTUBE_DL"]="/data/data/com.termux/files/usr/opt/com.ys.apps/getytmusic/lib/youtube-dl"
-
-    else:
-        print("ERROR: Not fount youtube-dl executable")
 
 dl_args=" --embed-thumbnail --extract-audio --audio-quality 0 --audio-format mp3 "
 
@@ -27,33 +15,29 @@ dl_args=" --embed-thumbnail --extract-audio --audio-quality 0 --audio-format mp3
 #system(f"mkdir -p {dw_dir}/YtMusic")
 
 
-paste_icon = "./img/paste.png"
-dw_icon = "./img/dw.png"
-clear_icon = "./img/clear.png"
-bg_window = "./img/music.png"
+sg.theme_add_new('DlYtMusicDark', theme.MaterialDarkNoBorder)
 
 df_font = ("Roboto 11")
-sg.theme("Material2")
+sg.theme("DlYtMusicDark")
+
+title = "DlYtMusic"
 
 layout = [
     [
         sg.Text("Ingrese la url", font=df_font),
 
-        sg.Button(image_filename=clear_icon, button_color="#FFFFFF",
-        tooltip="Limpiar contenido", key="-CLEAR-"),
+        sg.Button(image_filename=icon.clear_icon, tooltip="Limpiar contenido", key="-CLEAR-"),
 
-        sg.Button(image_filename=paste_icon, button_color="#FFFFFF", 
-        tooltip="Pegar portapapeles", key="-PASTE-"),
+        sg.Button(image_filename=icon.paste_icon, tooltip="Pegar portapapeles", key="-PASTE-"),
 
-        sg.Input(key="-INPUT-", background_color="#EEE2E2", text_color="#000000"),
+        sg.Input(key="-INPUT-"),
 
-        sg.Button(image_filename=dw_icon, button_color="#FFFFFF", 
-        tooltip="Descargar", key="-DW-")
+        sg.Button(image_filename=icon.dw_icon, tooltip="Descargar", key="-DW-")
     ],
 
 ]
 
-window = sg.Window("GetYtMusic", layout, resizable=False, alpha_channel=1.0)
+window = sg.Window("GetYtMusic", layout, resizable=False, alpha_channel=1.0, no_titlebar=False)
 while True:
     event, values = window.read()
 
@@ -68,7 +52,6 @@ while True:
 
     elif event == "-DW-":
         chdir(environ.get("HOME") + "/Descargas")
-        get_backend()
         system(environ.get("YOUTUBE_DL") + dl_args + values["-INPUT-"])
 
     else:
