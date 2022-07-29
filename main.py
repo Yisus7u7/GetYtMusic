@@ -7,6 +7,7 @@ from os import system, path, popen, environ, chdir
 
 dl_args=" --embed-thumbnail --extract-audio --audio-quality 0 --audio-format mp3 "
 
+# Nota
 #xdg_dirs = popen("cat ~/.config/user-dirs.dirs | grep -Po \'XDG_DOWNLOAD_DIR=\"\K.+(?=\")\'").read()
 #system("export" + xdg_dirs)
 #environ["XDG_DOWNLOAD_DIR"]=xdg_dirs
@@ -17,23 +18,23 @@ dl_args=" --embed-thumbnail --extract-audio --audio-quality 0 --audio-format mp3
 
 sg.theme_add_new('DlYtMusicDark', theme.MaterialDarkNoBorder)
 
-df_font = ("Roboto 11")
+df_font = ("Sans 11")
 sg.theme("DlYtMusicDark")
 
 title = "DlYtMusic"
 
 layout = [
     [
-        sg.Text("Ingrese la url", font=df_font),
+        sg.Text("Ingrese la url:", font=df_font),
 
-        sg.Button(image_filename=icon.clear_icon, tooltip="Limpiar contenido", key="-CLEAR-"),
+        sg.Button(image_filename=icon.clear_icon, tooltip="Limpiar contenido", key='-CLEAR-'),
 
-        sg.Button(image_filename=icon.paste_icon, tooltip="Pegar portapapeles", key="-PASTE-"),
+        sg.Button(image_filename=icon.paste_icon, tooltip="Pegar portapapeles", key='-PASTE-'),
 
         sg.Input(key="-INPUT-"),
 
         sg.Button(image_filename=icon.dw_icon, tooltip="Descargar", key="-DW-")
-    ],
+    ],     
 
 ]
 
@@ -44,13 +45,13 @@ while True:
     if event == sg.WINDOW_CLOSED:
         break
 
-    elif event == "-CLEAR-":
-        window["-INPUT-"].update("")
+    elif event == '-CLEAR-':
+        window['-INPUT-'].update("")
 
     elif event == "-PASTE-":
-        window["-INPUT-"].update(clipboard.paste())
+        window['-INPUT-'].update(clipboard.paste())
 
-    elif event == "-DW-":
+    elif event == '-DW-':
         chdir(environ.get("HOME") + "/Descargas")
         system(environ.get("YOUTUBE_DL") + dl_args + values["-INPUT-"])
 

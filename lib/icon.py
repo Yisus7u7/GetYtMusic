@@ -14,12 +14,14 @@ if icon_type == "light":
     clear_icon = "./lib/img/light/clear.png"
     paste_icon = "./lib/img/light/paste.png"
     dw_icon = "./lib/img/light/dw.png"
+    settings_icon = "./lib/img/light/settings.png"
     pass
 
 elif icon_type == "dark":
     clear_icon = "./lib/img/dark/clear.png"
     paste_icon = "./lib/img/dark/paste.png"
     dw_icon = "./lib/img/dark/dw.png"
+    settings_icon = "./lib/img/dark/settings.png"
     pass
 
 else:
